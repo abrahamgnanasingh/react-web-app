@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-class Home extends Component {
+class Settings extends Component {
   
     render() {
       return (
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-12">
-              <h4 className="">Home</h4>
+              <h4 className="">Settings</h4>
             </div>
           </div>
         </div>
@@ -15,4 +15,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default Settings;
