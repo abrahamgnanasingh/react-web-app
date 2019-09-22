@@ -1,4 +1,4 @@
-const Authentication = {
+const AuthService = {
     isAuthenticated: false,
 
     authenticate(cb) {
@@ -12,4 +12,4 @@ const Authentication = {
     }
 };
 
-export default Authentication;
+export default AuthService;

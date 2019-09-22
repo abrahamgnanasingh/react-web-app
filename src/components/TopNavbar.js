@@ -5,13 +5,13 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
-import Authentication from '../services/Authentication';
+import AuthService from '../services/AuthService';
 
 class TopNavbar extends Component {
     logout(e) {
         e.preventDefault();
 
-        Authentication.signout(() => this.props.history.push("/"));
+        AuthService.signout(() => this.props.history.push("/"));
     }
 
     render() {
@@ -38,7 +38,7 @@ class TopNavbar extends Component {
                             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                             {/* <Button variant="outline-light">Search</Button> */}
                             <Link to="/settings" role="tab" tabIndex="-1" className="nav-link">Settings</Link>
-                            <a href="" role="tab" tabIndex="-1" className="nav-link" onClick={e => this.logout(e)}>Sign out</a>
+                            <a href="/logout" role="tab" tabIndex="-1" className="nav-link" onClick={e => this.logout(e)}>Sign out</a>
                         </Form>
                     </Nav>
                 </Navbar.Collapse>
