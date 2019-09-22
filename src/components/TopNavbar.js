@@ -11,14 +11,14 @@ class TopNavbar extends Component {
     logout(e) {
         e.preventDefault();
 
-        AuthService.signout(() => this.props.history.push("/"));
+        AuthService.signout(() => this.props.history.push("/login"));
     }
 
     render() {
         return (
             <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark">
                 {/* <Navbar.Brand href="#home">React Web App</Navbar.Brand> */}
-                <Link to="/" className="navbar-brand">React Web App</Link>
+                <Link to="/" className="navbar-brand">React Web</Link>
                 
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
