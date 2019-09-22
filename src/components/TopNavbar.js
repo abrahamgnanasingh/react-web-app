@@ -40,10 +40,10 @@ class TopNavbar extends Component {
                             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
                             {/* <Button variant="outline-light">Search</Button> */}
 
-                            <Link to="/settings" role="tab" tabIndex="-1" className="nav-link">
+                            <Link to="/settings" role="tab" tabIndex="-1" className="nav-link" title="Settings">
                                 <FontAwesomeIcon icon={faWrench} />
                             </Link>
-                            <a href="/logout" role="tab" tabIndex="-1" className="nav-link" onClick={e => this.logout(e)}>
+                            <a href="/logout" role="tab" tabIndex="-1" className="nav-link" onClick={e => this.logout(e)} title="Sign out">
                                 <FontAwesomeIcon icon={faSignOutAlt} />
                             </a>
                         </Form>
