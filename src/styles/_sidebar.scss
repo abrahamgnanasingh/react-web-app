@@ -31,7 +31,7 @@
     overflow-y: auto;
 }
 
-.feather {
+/* .feather {
     width: 16px;
     height: 16px;
     vertical-align: text-bottom;
@@ -42,5 +42,19 @@
 }
 .sidebar .nav-link:hover .feather,
 .sidebar .nav-link.active .feather {
+    color: inherit;
+} */
+
+.svg-inline--fa {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
+}
+.sidebar .nav-link .svg-inline--fa {
+    margin-right: 4px;
+    color: #999;
+}
+.sidebar .nav-link:hover .svg-inline--fa,
+.sidebar .nav-link.active .svg-inline--fa {
     color: inherit;
 }
