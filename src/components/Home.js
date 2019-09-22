@@ -4,13 +4,9 @@ class Home extends Component {
   
     render() {
       return (
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-md-12">
-              <h4 className="">Home</h4>
-            </div>
-          </div>
-        </div>
+        <>
+          <h1 className="h2">Home</h1>
+        </>
       ); 
     }
 }
