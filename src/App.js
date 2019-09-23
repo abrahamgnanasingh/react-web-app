@@ -5,9 +5,9 @@ import PrivateRoute from './components/PrivateRoute';
 import ErrorBoundary from './components/ErrorBoundary';
 import Login from './components/Login';
 import Main from './components/Main';
-import Home from './components/Home';
-import Settings from './components/Settings';
-import NotFound from './components/NotFound';
+import Home from './pages/Home';
+import Settings from './pages/Settings';
+import NotFound from './pages/NotFound';
 // import PrivateRoutes from './components/PrivateRoutes';
 
 function App() {

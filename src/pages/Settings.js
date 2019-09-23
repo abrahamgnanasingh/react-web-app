@@ -4,9 +4,9 @@ class Settings extends Component {
   
     render() {
       return (
-        <>
-          <h1 className="h2">Settings</h1>
-        </>
+        <div className="mt-2">
+          <h1 className="h4">Settings</h1>
+        </div>
       ); 
     }
 }

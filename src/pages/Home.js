@@ -4,10 +4,10 @@ class Home extends Component {
   
     render() {
       return (
-        <>
-          <h1 className="h2">Home</h1>
-        </>
-      ); 
+        <div className="mt-2">
+          <h1 className="h4">Home</h1>
+        </div>
+      );
     }
 }
 
