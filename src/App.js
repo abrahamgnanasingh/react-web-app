@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 // import Glyphicon from 'react-bootstrap/Glyphicon';
 import ErrorBoundary from './components/ErrorBoundary';
-import Login from './components/Login';
+import Login from './pages/Login';
 import Main from './components/Main';
 import Home from './pages/Home';
 import Settings from './pages/Settings';
