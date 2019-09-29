@@ -26,7 +26,7 @@ class Job extends Component {
 
     var status = match.params.status;
     if(status === 'create') { return 'Create'; }
-    else if(status === 'update') { return 'Update'; }
+    else if(status === 'edit') { return 'Update'; }
     return null;
   }
 

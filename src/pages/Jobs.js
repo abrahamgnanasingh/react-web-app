@@ -68,7 +68,7 @@ class Jobs extends Component {
                       <td className="align-middle">{j.value1}</td>
                       <td className="align-middle">{j.value2}</td>
                       <td className="align-middle">
-                        <Link to={`/jobs/update/${j.id}`} className="btn btn-link py-0">Edit</Link>
+                        <Link to={`/jobs/edit/${j.id}`} className="btn btn-link py-0">Edit</Link>
                         <button className="btn btn-link py-0" onClick={() => this.handleDeleteJobConfirm(j)}>Delete</button>
                       </td>
                     </tr>
