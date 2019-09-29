@@ -23,7 +23,7 @@ class Login extends Component {
 
         return (
             <>
-                <form className="form-signin" onSubmit={e => this.handleLogin(e)}>
+                <form className="form-signin" onSubmit={e => this.handleLogin(e)} noValidate>
                     <div className="text-center mb-4">
                         <img className="" src={logo} alt="" width="72" height="72" />
                         <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
