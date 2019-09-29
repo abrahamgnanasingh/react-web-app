@@ -18,7 +18,7 @@ class Job extends Component {
     const { isSubmitted } = this.state;
 
     return (
-      <div className="col-md-7 order-md-1 mt-3 m-auto">
+      <div className="col-md-7 order-md-1 mt-3 mx-auto">
         <h4 className="mb-3">Job</h4>
 
         <form className={isSubmitted ? "was-validated": ""} onSubmit={e => this.handleJobSubmit(e)} noValidate>
@@ -82,7 +82,7 @@ class Job extends Component {
           </div>
 
           <div className="text-center mb-3">
-            <button className="btn btn-default" type="button" onClick={() => history.push('/jobs/list')}>Cancel</button>
+            <button className="btn btn-secondary mr-2" type="button" onClick={() => history.push('/jobs/list')}>Cancel</button>
             <button className="btn btn-primary" type="submit">{match.params.status === 'create' ? 'Create' : 'Update'}</button>
           </div>
         </form>

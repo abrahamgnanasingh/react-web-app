@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 class Technicians extends Component {
     state = { technicians : [
-      { id: '1,001', name: 'Abraham', value1: 'ipsum', value2: 'dolor', value3: 'sit' },
-      { id: '1,002', name: 'Gnanasingh', value1: 'consectetur', value2: 'adipiscing', value3: 'elit' },
-      { id: '1,003', name: 'Abrew', value1: 'nec', value2: 'odio', value3: 'Praesent' }
+      { id: '1001', name: 'Abraham', value1: 'ipsum', value2: 'dolor', value3: 'sit' },
+      { id: '1002', name: 'Gnanasingh', value1: 'consectetur', value2: 'adipiscing', value3: 'elit' },
+      { id: '1003', name: 'Abrew', value1: 'nec', value2: 'odio', value3: 'Praesent' }
     ] }
   
     render() {
@@ -17,7 +17,7 @@ class Technicians extends Component {
           <div className="table-responsive">
             <table className="table table-striped table-bordered">
               <thead>
-                <tr>
+                <tr className="text-center">
                   <th>#</th>
                   <th>Name</th>
                   <th>Header</th>
@@ -28,12 +28,12 @@ class Technicians extends Component {
               <tbody>
                 {technicians.map(t => {
                   return (
-                    <tr key={t.id}>
-                      <td>{t.id}</td>
-                      <td>{t.name}</td>
-                      <td>{t.value1}</td>
-                      <td>{t.value2}</td>
-                      <td>{t.value3}</td>
+                    <tr className="text-center" key={t.id}>
+                      <td className="align-middle">{t.id}</td>
+                      <td className="align-middle">{t.name}</td>
+                      <td className="align-middle">{t.value1}</td>
+                      <td className="align-middle">{t.value2}</td>
+                      <td className="align-middle">{t.value3}</td>
                     </tr>
                   )
                 })}

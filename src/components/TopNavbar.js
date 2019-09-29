@@ -6,8 +6,8 @@ import Nav from 'react-bootstrap/Nav';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 // import Form from 'react-bootstrap/Form';
 // import FormControl from 'react-bootstrap/FormControl';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWrench, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faWrench, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import AuthService from '../services/AuthService';
 
 class TopNavbar extends Component {
@@ -48,11 +48,12 @@ class TopNavbar extends Component {
                             <Button variant="outline-light">Search</Button>
                         </Form> */}
 
-                            <Link to="/settings" role="tab" tabIndex="-1" className="nav-link mr-2" title="Settings">
+                            {/* <Link to="/settings" role="tab" tabIndex="-1" className="nav-link mr-2" title="Settings">
                                 <FontAwesomeIcon icon={faWrench} />
-                            </Link>
+                            </Link> */}
                             <a href="/logout" role="tab" tabIndex="-1" className="nav-link" onClick={e => this.logout(e)} title="Sign out">
-                                <FontAwesomeIcon icon={faSignOutAlt} />
+                                Sign out
+                                {/* <FontAwesomeIcon icon={faSignOutAlt} /> */}
                             </a>
                     </Nav>
                 </Navbar.Collapse>
