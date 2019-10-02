@@ -1,11 +1,50 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import JobService from '../services/JobService';
 
 class Job extends Component {
   state = {
     isSubmitted: false,
-    isLoading: false
+    isLoading: false,
+    defaultValues: {
+      typeOfJob: '',
+      customerName: '',
+      customerUniqueId: '',
+      address: '',
+      address2: '',
+      parish: '',
+      technician: ''
+    }
   };
+
+  componentDidMount() {
+    const { match: { params } } = this.props;
+
+    const { defaultValues } = this.state;
+
+    if(params.status === 'edit') {
+      let jobs = JobService.getJobs();
+      if(jobs) {
+        var selectedJob = jobs.list.filter(j => j.id === params.id)[0];
+        this.setState({
+          defaultValues: Object.assign({}, defaultValues, selectedJob)
+        });
+      }
+    }
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    const defaultValues = Object.assign({}, this.state.defaultValues);
+    defaultValues[name] = value;
+
+    this.setState({
+      defaultValues
+    });
+  }
 
   handleJobSubmit(e) {
     e.preventDefault();
@@ -33,7 +72,7 @@ class Job extends Component {
   render() {
     const { history } = this.props;
 
-    const { isSubmitted, isLoading } = this.state;
+    const { isSubmitted, isLoading, defaultValues } = this.state;
 
     return (
       <div className="col-md-5 order-md-1 mt-3 mx-auto">
@@ -42,7 +81,7 @@ class Job extends Component {
         <form className={isSubmitted ? "was-validated": ""} onSubmit={e => this.handleJobSubmit(e)} noValidate>
           <div className="mb-3">
             <label htmlFor="typeOfJob">Type of Job</label>
-            <select className="custom-select d-block w-100" id="typeOfJob" required>
+            <select className="custom-select d-block w-100" name="typeOfJob" id="typeOfJob" required value={defaultValues.typeOfJob} onChange={e => this.handleInputChange(e)}>
               <option value="">Choose...</option>
               <option>Technical</option>
             </select>
@@ -53,7 +92,7 @@ class Job extends Component {
 
           <div className="mb-3">
             <label htmlFor="customerName">Customer Name</label>
-            <input type="text" className="form-control" id="customerName" placeholder="" required />
+            <input type="text" className="form-control" name="customerName" id="customerName" placeholder="" required value={defaultValues.customerName} onChange={e => this.handleInputChange(e)} />
             <div className="invalid-feedback">
               Please enter a valid customer name.
             </div>
@@ -61,7 +100,7 @@ class Job extends Component {
 
           <div className="mb-3">
             <label htmlFor="customerUniqueId">Customer Unique ID</label>
-            <input type="text" className="form-control" id="customerUniqueId" placeholder="" required />
+            <input type="text" className="form-control" name="customerUniqueId" id="customerUniqueId" placeholder="" required value={defaultValues.customerUniqueId} onChange={e => this.handleInputChange(e)} />
             <div className="invalid-feedback">
               Please enter a valid customer unique id.
             </div>
@@ -69,7 +108,7 @@ class Job extends Component {
 
           <div className="mb-3">
             <label htmlFor="address">Address</label>
-            <input type="text" className="form-control" id="address" placeholder="1234 Main St" required />
+            <input type="text" className="form-control" name="address" id="address" placeholder="1234 Main St" required value={defaultValues.address} onChange={e => this.handleInputChange(e)} />
             <div className="invalid-feedback">
               Please enter your address.
             </div>
@@ -77,12 +116,12 @@ class Job extends Component {
 
           <div className="mb-3">
             <label htmlFor="address2">Address 2 <span className="text-muted">(Optional)</span></label>
-            <input type="text" className="form-control" id="address2" placeholder="Apartment or suite" />
+            <input type="text" className="form-control" name="address2" id="address2" placeholder="Apartment or suite" value={defaultValues.address2} onChange={e => this.handleInputChange(e)} />
           </div>
 
           <div className="mb-3">
             <label htmlFor="parish">Parish/District</label>
-            <input type="text" className="form-control" id="parish" placeholder="" required />
+            <input type="text" className="form-control" name="parish" id="parish" placeholder="" required value={defaultValues.parish} onChange={e => this.handleInputChange(e)} />
             <div className="invalid-feedback">
               Please enter your parish.
             </div>
@@ -90,7 +129,7 @@ class Job extends Component {
 
           <div className="mb-3">
             <label htmlFor="technician">Select Technician</label>
-            <select className="custom-select d-block w-100" id="technician" required>
+            <select className="custom-select d-block w-100" name="technician" id="technician" required value={defaultValues.technician} onChange={e => this.handleInputChange(e)}>
               <option value="">Choose...</option>
               <option>Abraham</option>
             </select>

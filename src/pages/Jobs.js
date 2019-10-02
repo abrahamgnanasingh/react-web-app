@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
-import Pagination from 'react-bootstrap/Pagination';
+// import Form from 'react-bootstrap/Form';
+// import FormControl from 'react-bootstrap/FormControl';
+// import Pagination from 'react-bootstrap/Pagination';
+import JobService from '../services/JobService';
 
 class Jobs extends Component {
     state = {
       showDeleteJobModal: false,
-      jobs: {
-        meta: { count: 21 },
-        list: [
-          { id: '1001', name: 'Repair AC', createdOn: 'ipsum', address: '1234 Main St' },
-          { id: '1002', name: 'RO Water Purifier Service', createdOn: 'consectetur', address: '25 Church St' },
-          { id: '1003', name: 'Repair Washing Machine', createdOn: 'nec', address: '77 Eden St' }
-        ]
-      },
+      jobs: JobService.getJobs(),
       selectedJob: null,
       activePage: 1,
       itemsPerPage: 10,
@@ -21,22 +17,39 @@ class Jobs extends Component {
     }
 
     componentDidMount() {
-      const { jobs, itemsPerPage } = this.state;
+      var jobsResponse = {
+        meta: { count: 21 },
+        list: [
+          { id: '1001', name: 'Repair AC', createdOn: 'ipsum', address: '1234 Main St' },
+          { id: '1002', name: 'RO Water Purifier Service', createdOn: 'consectetur', address: '25 Church St' },
+          { id: '1003', name: 'Repair Washing Machine', createdOn: 'nec', address: '77 Eden St' }
+        ]
+      };
+      JobService.setJobs(jobsResponse);
+      this.setState({
+        jobs: JobService.getJobs()
+      }, () => {
+        const { jobs, itemsPerPage } = this.state;
+  
+        let totalPages = jobs ? Math.ceil(jobs.meta.count/itemsPerPage) : 0;
+        this.setState({totalPages});
+      });
+    }
 
-      let totalPages = jobs ? Math.ceil(jobs.meta.count/itemsPerPage) : 0;
-      this.setState({totalPages});
+    handleSearchSubmit(e) {
+      e.preventDefault();
     }
 
     handlePaginationChange(elem) {
-      let { activePage, totalPages } = this.state;
+      let { activePage } = this.state;
 
       let currentPage = activePage;
 
       switch(elem) {
-        case 'first': currentPage = 1; break;
+        // case 'first': currentPage = 1; break;
         case 'prev': currentPage = activePage - 1; break;
         case 'next': currentPage = activePage + 1; break;
-        case 'last': currentPage = totalPages; break;
+        // case 'last': currentPage = totalPages; break;
         default: currentPage = elem; break;
       }
 
@@ -62,25 +75,20 @@ class Jobs extends Component {
     render() {
       const { jobs, showDeleteJobModal, selectedJob, activePage, itemsPerPage, totalPages } = this.state;
 
-      let paginationItems = [];
+      let activeStartRecordCount = (activePage * itemsPerPage) - itemsPerPage + 1;//Math.ceil(activePage / itemsPerPage);
+      let activeEndRecordCount = Math.min(activePage * itemsPerPage, jobs && jobs.meta && jobs.meta.count);
 
-      for(let i = 1; i <= totalPages; i++) {
-        paginationItems.push(<Pagination.Item active={i === activePage} onClick={() => this.handlePaginationChange(i)}>{i}</Pagination.Item>);
-      }
+      // let paginationItems = [];
+
+      // for(let i = 1; i <= totalPages; i++) {
+      //   paginationItems.push(<Pagination.Item active={i === activePage} onClick={() => this.handlePaginationChange(i)}>{i}</Pagination.Item>);
+      // }
 
       return (
         <div className="col-md-12 mt-3">
-          <div className="row mb-2">
+          <div className="row mb-3">
             <div className="col-md-12">
               <h1 className="h4 d-inline">Jobs</h1>
-              <div className="btn-toolbar float-sm-right float-md-right">
-                {/* <div className="btn-group mr-2">
-                  <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
-                  <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
-                </div> */}
-                <button className="btn btn-primary" onClick={() => this.handleCreateJob()}>Create</button>
-              </div>
-              <div className="clearfix"></div>
             </div>
           </div>
 
@@ -103,52 +111,81 @@ class Jobs extends Component {
             </div>
           </div> */}
 
-          <div className="table-responsive mb-2">
-            <table className="table table-striped table-bordered">
-              <thead>
-                <tr className="text-center">
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Address</th>
-                  <th>Created On</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {jobs && jobs.list.map(j => {
-                  return (
-                    <tr className="text-center" key={j.id}>
-                      <td className="align-middle">{j.id}</td>
-                      <td className="align-middle">{j.name}</td>
-                      <td className="align-middle">{j.address}</td>
-                      <td className="align-middle">{j.createdOn}</td>
-                      <td className="align-middle">
-                        <Link to={`/jobs/edit/${j.id}`} className="btn btn-link py-0">Edit</Link>
-                        <button className="btn btn-link py-0" onClick={() => this.handleDeleteJobConfirm(j)}>Delete</button>
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
+          <div className="mb-2">
+            <div className="mb-3">
+              <div className="d-inline-block">
+                <form className="form-inline" onSubmit={e => this.handleSearchSubmit(e)}>
+                  <input placeholder="Search" type="text" className="mr-sm-2 form-control" />
+                </form>
+              </div>
+              <div className="btn-toolbar float-sm-right float-md-right">
+                {/* <div className="btn-group mr-2">
+                  <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
+                  <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
+                </div> */}
+                <button className="btn btn-primary" onClick={() => this.handleCreateJob()}>Create</button>
+              </div>
+              <div className="clearfix"></div>
+            </div>
+            <div className="table-responsive">
+              <table className="table table-striped table-bordered">
+                <thead>
+                  <tr className="text-center">
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Created On</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {jobs && jobs.list.map(j => {
+                    return (
+                      <tr className="text-center" key={j.id}>
+                        <td className="align-middle">{j.id}</td>
+                        <td className="align-middle">{j.name}</td>
+                        <td className="align-middle">{j.address}</td>
+                        <td className="align-middle">{j.createdOn}</td>
+                        <td className="align-middle">
+                          <Link to={`/jobs/edit/${j.id}`} className="btn btn-link py-0">Edit</Link>
+                          <button className="btn btn-link py-0" onClick={() => this.handleDeleteJobConfirm(j)}>Delete</button>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <div className="mb-2">
             <div className="d-inline-block">
-              <p><span className="font-weight-bold">Total Count:</span> {jobs && (jobs.meta.count === 0 ? '###' : jobs.meta.count)}</p>
+              <p>Total Count: <span className="font-weight-bold">{jobs && (jobs.meta.count === 0 ? '###' : jobs.meta.count)}</span></p>
             </div>
             <div className="float-md-right">
-              <Pagination>
-                <Pagination.First disabled={activePage === 1} onClick={() => this.handlePaginationChange('first')} />
+              {/* <Pagination>
                 <Pagination.Prev disabled={activePage === 1} onClick={() => this.handlePaginationChange('prev')} />
-                {/* <Pagination.Item onClick={() => this.handlePaginationChange(1)}>{1}</Pagination.Item>
-                <Pagination.Ellipsis /> */}
                 
                 { React.Children.toArray(paginationItems) }
 
                 <Pagination.Next disabled={activePage === totalPages} onClick={() => this.handlePaginationChange('next')} />
-                <Pagination.Last disabled={activePage === totalPages} onClick={() => this.handlePaginationChange('last')} />
-              </Pagination>
+              </Pagination> */}
+
+              <ul className="list-inline mb-0">
+                <li className="list-inline-item h4 mb-0">
+                  <button className="btn btn-light" disabled={activePage === 1} onClick={() => this.handlePaginationChange('prev')}><span aria-hidden={activePage === 1 ? "true" : "false"}>&lt;</span></button>
+                </li>
+                <li className="list-inline-item h6 mb-0">
+                  <p>
+                    <span>{activeStartRecordCount}</span>
+                    <span className="px-2 text-muted">to</span>
+                    <span>{activeEndRecordCount}</span>
+                  </p>
+                </li>
+                <li className="list-inline-item h4 mb-0">
+                  <button className="btn btn-light" disabled={activePage === totalPages} onClick={() => this.handlePaginationChange('next')}><span aria-hidden={activePage === totalPages ? "true" : "false"}>&gt;</span></button>
+                </li>
+              </ul>
             </div>
             <div className="clearfix"></div>
           </div>
