@@ -128,7 +128,7 @@ class Jobs extends Component {
               <div className="clearfix"></div>
             </div>
             <div className="table-responsive">
-              <table className="table table-striped table-bordered">
+              <table className="table table-hover">
                 <thead>
                   <tr className="text-center">
                     <th>#</th>
@@ -196,7 +196,7 @@ class Jobs extends Component {
             </Modal.Header>
             <Modal.Body>Are you sure want to delete the job (<span dangerouslySetInnerHTML={{__html: `<b>${selectedJob && selectedJob.name}</b>`}}></span>)?</Modal.Body>
             <Modal.Footer>
-              <button type="button" className="btn btn-secondary" onClick={() => this.handleDeleteJobModalClose()}>Close</button>
+              <button type="button" className="btn btn-secondary" onClick={() => this.handleDeleteJobModalClose()}>Cancel</button>
               <button type="button" className="btn btn-danger" onClick={() => this.handleDeleteJob()}>Delete</button>
             </Modal.Footer>
           </Modal>

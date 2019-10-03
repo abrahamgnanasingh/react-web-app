@@ -16,3 +16,9 @@ body {
 .w-16 {
     width: 16px;
 }
+
+/* Table classes */
+.table thead th {
+    border-bottom-width: 3px;
+    border-bottom-style: double;
+}

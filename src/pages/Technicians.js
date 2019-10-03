@@ -44,7 +44,7 @@ class Technicians extends Component {
             </div>
 
             <div className="table-responsive">
-              <table className="table table-striped table-bordered">
+              <table className="table table-hover">
                 <thead>
                   <tr className="text-center">
                     <th>#</th>
