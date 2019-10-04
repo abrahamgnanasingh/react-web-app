@@ -123,7 +123,7 @@ class Jobs extends Component {
                   <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
                   <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
                 </div> */}
-                <button className="btn btn-primary" onClick={() => this.handleCreateJob()}>Create</button>
+                <button className="btn btn-primary" onClick={() => this.handleCreateJob()}>+ Create</button>
               </div>
               <div className="clearfix"></div>
             </div>

@@ -38,7 +38,7 @@ class Technicians extends Component {
                   <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
                   <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
                 </div> */}
-                <button className="btn btn-primary" onClick={() => this.handleAddTechnician()}>Add</button>
+                <button className="btn btn-primary" onClick={() => this.handleAddTechnician()}>+ Add</button>
               </div>
               <div className="clearfix"></div>
             </div>
