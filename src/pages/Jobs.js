@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 // import Form from 'react-bootstrap/Form';
 // import FormControl from 'react-bootstrap/FormControl';
 // import Pagination from 'react-bootstrap/Pagination';
+import Checkbox from '../components/Checkbox';
 import JobService from '../services/JobService';
 
 class Jobs extends Component {
@@ -131,6 +132,11 @@ class Jobs extends Component {
               <table className="table table-hover">
                 <thead>
                   <tr className="text-center">
+                    <th>
+                      <div>
+                        <Checkbox name="selectAllJobs" />
+                      </div>
+                    </th>
                     <th>#</th>
                     <th>Name</th>
                     <th>Address</th>
@@ -142,6 +148,11 @@ class Jobs extends Component {
                   {jobs && jobs.list.map(j => {
                     return (
                       <tr className="text-center" key={j.id}>
+                        <td className="align-middle">
+                          <div>
+                            <Checkbox name="selectJob" />
+                          </div>
+                        </td>
                         <td className="align-middle">{j.id}</td>
                         <td className="align-middle">{j.name}</td>
                         <td className="align-middle">{j.address}</td>

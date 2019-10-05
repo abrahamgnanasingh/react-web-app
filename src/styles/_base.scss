@@ -22,3 +22,7 @@ body {
     border-bottom-width: 3px;
     border-bottom-style: double;
 }
+
+.table-hover tbody tr:hover {
+    background-color: $gray-100;
+}
