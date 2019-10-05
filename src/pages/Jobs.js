@@ -14,7 +14,8 @@ class Jobs extends Component {
       selectedJob: null,
       activePage: 1,
       itemsPerPage: 10,
-      totalPages: 1
+      totalPages: 1,
+      isSelectAllJobsChecked: false
     }
 
     componentDidMount() {
@@ -39,6 +40,12 @@ class Jobs extends Component {
 
     handleSearchSubmit(e) {
       e.preventDefault();
+    }
+
+    handleSelectAllJobs(e) {
+      this.setState({
+        isSelectAllJobsChecked: e.target.checked
+      });
     }
 
     handlePaginationChange(elem) {
@@ -74,7 +81,7 @@ class Jobs extends Component {
     }
   
     render() {
-      const { jobs, showDeleteJobModal, selectedJob, activePage, itemsPerPage, totalPages } = this.state;
+      const { jobs, showDeleteJobModal, selectedJob, activePage, itemsPerPage, totalPages, isSelectAllJobsChecked } = this.state;
 
       let activeStartRecordCount = (activePage * itemsPerPage) - itemsPerPage + 1;//Math.ceil(activePage / itemsPerPage);
       let activeEndRecordCount = Math.min(activePage * itemsPerPage, jobs && jobs.meta && jobs.meta.count);
@@ -134,7 +141,7 @@ class Jobs extends Component {
                   <tr className="text-center">
                     <th>
                       <div>
-                        <Checkbox name="selectAllJobs" />
+                        <Checkbox name="selectAllJobs" onChange={e => this.handleSelectAllJobs(e)} checked={isSelectAllJobsChecked} />
                       </div>
                     </th>
                     <th>#</th>
