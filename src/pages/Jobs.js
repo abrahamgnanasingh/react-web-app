@@ -166,8 +166,8 @@ class Jobs extends Component {
           </div> */}
 
           <div className="mb-2">
-            <div className="mb-3">
-              <div className="d-inline-block">
+            <div className="mb-2">
+              <div className="d-inline-block pb-2">
                 <form className="form-inline" onSubmit={e => this.handleSearchSubmit(e)}>
                   <input placeholder="Search" type="text" className="mr-sm-2 form-control" />
                 </form>
