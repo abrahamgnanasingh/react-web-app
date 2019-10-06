@@ -22,9 +22,9 @@ class Jobs extends Component {
       var jobsResponse = {
         meta: { count: 21 },
         list: [
-          { id: '1001', name: 'Repair AC', createdOn: 'ipsum', address: '1234 Main St' },
-          { id: '1002', name: 'RO Water Purifier Service', createdOn: 'consectetur', address: '25 Church St' },
-          { id: '1003', name: 'Repair Washing Machine', createdOn: 'nec', address: '77 Eden St' }
+          { id: '1001', name: 'Repair AC', createdOn: 'ipsum', address: '1234 Main St', selected: false },
+          { id: '1002', name: 'RO Water Purifier Service', createdOn: 'consectetur', address: '25 Church St', selected: false },
+          { id: '1003', name: 'Repair Washing Machine', createdOn: 'nec', address: '77 Eden St', selected: false }
         ]
       };
       JobService.setJobs(jobsResponse);
@@ -43,8 +43,28 @@ class Jobs extends Component {
     }
 
     handleSelectAllJobs(e) {
+      var checked = e.target.checked;
+      var jobs = Object.assign({}, this.state.jobs);
+      jobs.list.forEach(j => {
+        j.selected = checked;
+      });
       this.setState({
-        isSelectAllJobsChecked: e.target.checked
+        isSelectAllJobsChecked: checked,
+        jobs
+      });
+    }
+
+    handleSelectJob(e, selectedJob) {
+      var checked = e.target.checked;
+      var jobs = Object.assign({}, this.state.jobs);
+      jobs.list.forEach(j => {
+        if(j.id === selectedJob.id) {
+          j.selected = checked;
+        }
+      });
+      this.setState({
+        isSelectAllJobsChecked: jobs.list.filter(j => !j.selected).length ? false : true,
+        jobs
       });
     }
 
@@ -157,7 +177,7 @@ class Jobs extends Component {
                       <tr className="text-center" key={j.id}>
                         <td className="align-middle">
                           <div>
-                            <Checkbox name="selectJob" />
+                            <Checkbox name="selectJob" onChange={e => this.handleSelectJob(e, j)} checked={j.selected} />
                           </div>
                         </td>
                         <td className="align-middle">{j.id}</td>
