@@ -17,6 +17,13 @@ body {
     width: 16px;
 }
 
+/* Font Size classes */
+@for $i from 1 through 30 {
+  .fs-#{$i} {
+    font-size: $i + px
+  }
+}
+
 /* Table classes */
 .table thead th {
     border-bottom-width: 3px;
@@ -25,4 +32,11 @@ body {
 
 .table-hover tbody tr:hover {
     background-color: $gray-100;
+}
+
+/* Horizontal Dots */
+$three-horizontal-dots-icon-bg: str-replace(url("data:image/svg+xml,%3csvg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg' fill='#{$navbar-light-color}'%3e%3ccircle xmlns='http://www.w3.org/2000/svg' cx='32' cy='32.358' r='4.824'/%3e%3ccircle xmlns='http://www.w3.org/2000/svg' cx='51.25' cy='32.358' r='4.824'/%3e%3ccircle xmlns='http://www.w3.org/2000/svg' cx='12.75' cy='32.358' r='4.824'/%3e%3c/svg%3e"), "#", "%23") !default;
+
+.three-horizontal-dots-icon {
+    background-image: $three-horizontal-dots-icon-bg;
 }

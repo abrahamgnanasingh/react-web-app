@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal';
-// import Form from 'react-bootstrap/Form';
-// import FormControl from 'react-bootstrap/FormControl';
 // import Pagination from 'react-bootstrap/Pagination';
+import Dropdown from 'react-bootstrap/Dropdown';
 import Checkbox from '../components/Checkbox';
+import ThreeHorizontalDotsToggle from '../components/ThreeHorizontalDotsToggle';
 import JobService from '../services/JobService';
 
 class Jobs extends Component {
@@ -17,12 +17,12 @@ class Jobs extends Component {
       totalPages: 1,
       isSelectAllJobsChecked: false,
       recordsPerPageOptions: [
-        { value: 10, label: "10 Records Per Page" },
-        { value: 20, label: "20 Records Per Page" },
-        { value: 30, label: "30 Records Per Page" },
-        { value: 40, label: "40 Records Per Page" },
-        { value: 50, label: "50 Records Per Page" },
-        { value: 100, label: "100 Records Per Page" }
+        { value: "10", label: "10 Records Per Page" },
+        { value: "20", label: "20 Records Per Page" },
+        { value: "30", label: "30 Records Per Page" },
+        { value: "40", label: "40 Records Per Page" },
+        { value: "50", label: "50 Records Per Page" },
+        { value: "100", label: "100 Records Per Page" }
       ],
       recordsPerPage: "20"
     }
@@ -31,9 +31,9 @@ class Jobs extends Component {
       var jobsResponse = {
         meta: { count: 21 },
         list: [
-          { id: '1001', name: 'Repair AC', createdOn: 'ipsum', address: '1234 Main St', selected: false },
-          { id: '1002', name: 'RO Water Purifier Service', createdOn: 'consectetur', address: '25 Church St', selected: false },
-          { id: '1003', name: 'Repair Washing Machine', createdOn: 'nec', address: '77 Eden St', selected: false }
+          { id: '1001', name: 'Repair AC', createdOn: 'Aug 14, 2019 15:56', address: '1234 Main St', selected: false },
+          { id: '1002', name: 'RO Water Purifier Service', createdOn: 'Aug 14, 2019 16:56', address: '25 Church St', selected: false },
+          { id: '1003', name: 'Repair Washing Machine', createdOn: 'Aug 14, 2019 17:56', address: '77 Eden St', selected: false }
         ]
       };
       JobService.setJobs(jobsResponse);
@@ -49,6 +49,17 @@ class Jobs extends Component {
 
     handleSearchSubmit(e) {
       e.preventDefault();
+    }
+
+    handleClearSelected() {
+      var jobs = Object.assign({}, this.state.jobs);
+      jobs.list.forEach(j => {
+        j.selected = false;
+      });
+      this.setState({
+        isSelectAllJobsChecked: false,
+        jobs
+      });
     }
 
     handleSelectAllJobs(e) {
@@ -162,25 +173,35 @@ class Jobs extends Component {
                 </form>
               </div>
               <div className="btn-toolbar float-sm-right float-md-right">
-                {/* <div className="btn-group mr-2">
-                  <button type="button" className="btn btn-sm btn-outline-secondary">Share</button>
-                  <button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
-                </div> */}
                 <button className="btn btn-primary" onClick={() => this.handleCreateJob()}>+ Create</button>
               </div>
               <div className="clearfix"></div>
             </div>
 
-            <div className="mb-2">
-              {noOfJobsSelected > 0 ?
-              <p>
-                <span className="font-weight-bold">{ noOfJobsSelected }</span> Jobs selected.
-              </p>
-              : ""}
-            </div>
+            {noOfJobsSelected > 0 ?
+              <div className="mb-3">
+                <ul className="list-inline mb-0">
+                  <li className="list-inline-item">
+                    <p className="mb-0">
+                      <span className="font-weight-bold">{ noOfJobsSelected }</span> Jobs selected.
+                      <button className="btn btn-link fs-12 ml-2 p-0" onClick={() => this.handleClearSelected()}>Clear</button>
+                    </p>
+                  </li>
+                  <li className="list-inline-item">
+                    <Dropdown>
+                      <Dropdown.Toggle as={ThreeHorizontalDotsToggle} id="dropdown-custom-components"></Dropdown.Toggle>
+
+                      <Dropdown.Menu className="rounded-0">
+                        <Dropdown.Item eventKey="1">Delete</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </li>
+                </ul>
+              </div>
+            : ""}
 
             <div className="table-responsive">
-              <table className="table table-hover">
+              <table className="table table-hover mb-0">
                 <thead>
                   <tr className="text-center">
                     <th>
@@ -191,7 +212,7 @@ class Jobs extends Component {
                     <th>#</th>
                     <th>Name</th>
                     <th>Address</th>
-                    <th>Created On</th>
+                    <th>Created on</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -218,6 +239,8 @@ class Jobs extends Component {
                 </tbody>
               </table>
             </div>
+
+            <hr className="my-0" />
           </div>
 
           <div className="mb-2">
@@ -225,35 +248,33 @@ class Jobs extends Component {
               <p>Total Count: <span className="font-weight-bold">{jobs && (jobs.meta.count === 0 ? '###' : jobs.meta.count)}</span></p>
             </div>
             <div className="float-md-right">
-                <select className="custom-select d-inline-block" name="recordsPerPage" value={recordsPerPage} onChange={e => this.handleRecordsPerPageChange(e)}>
-                  {recordsPerPageOptions.map(rpp => {
-                    return (
-                      <option key={rpp.value} value={rpp.value}>{rpp.label}</option>
-                    )
-                  })}
-                </select>
+                <ul className="list-inline mb-0">
+                  <li className="list-inline-item">
+                    <select className="custom-select" name="recordsPerPage" value={recordsPerPage} onChange={e => this.handleRecordsPerPageChange(e)}>
+                      {recordsPerPageOptions.map(rpp => {
+                        return (
+                          <option key={rpp.value} value={rpp.value}>{rpp.label}</option>
+                        )
+                      })}
+                    </select>
+                  </li>
 
-              {/* <Pagination>
-                <Pagination.Prev disabled={activePage === 1} onClick={() => this.handlePaginationChange('prev')} />
-                
-                { React.Children.toArray(paginationItems) }
-
-                <Pagination.Next disabled={activePage === totalPages} onClick={() => this.handlePaginationChange('next')} />
-              </Pagination> */}
-
-              <ul className="list-inline mb-0">
-                <li className="list-inline-item h4 mb-0">
-                  <button className="btn btn-light" disabled={activePage === 1} onClick={() => this.handlePaginationChange('prev')}><span aria-hidden={activePage === 1 ? "true" : "false"}>&lt;</span></button>
-                </li>
-                <li className="list-inline-item h6 mb-0">
-                  <p>
-                    <span>{activeStartRecordCount}</span>
-                    <span className="px-2 text-muted">to</span>
-                    <span>{activeEndRecordCount}</span>
-                  </p>
-                </li>
-                <li className="list-inline-item h4 mb-0">
-                  <button className="btn btn-light" disabled={activePage === totalPages} onClick={() => this.handlePaginationChange('next')}><span aria-hidden={activePage === totalPages ? "true" : "false"}>&gt;</span></button>
+                  <li className="list-inline-item">
+                    <ul className="list-inline mb-0">
+                      <li className="list-inline-item h4 mb-0">
+                        <button className="btn btn-light" disabled={activePage === 1} onClick={() => this.handlePaginationChange('prev')}><span aria-hidden={activePage === 1 ? "true" : "false"}>&lt;</span></button>
+                      </li>
+                      <li className="list-inline-item h6 mb-0">
+                        <p>
+                          <span>{activeStartRecordCount}</span>
+                          <span className="px-2 text-muted">to</span>
+                          <span>{activeEndRecordCount}</span>
+                        </p>
+                      </li>
+                      <li className="list-inline-item h4 mb-0">
+                        <button className="btn btn-light" disabled={activePage === totalPages} onClick={() => this.handlePaginationChange('next')}><span aria-hidden={activePage === totalPages ? "true" : "false"}>&gt;</span></button>
+                      </li>
+                    </ul>
                 </li>
               </ul>
             </div>
