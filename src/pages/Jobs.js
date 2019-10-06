@@ -68,6 +68,10 @@ class Jobs extends Component {
       });
     }
 
+    handleRecordsPerPageChange(e) {
+
+    }
+
     handlePaginationChange(elem) {
       let { activePage } = this.state;
 
@@ -102,6 +106,8 @@ class Jobs extends Component {
   
     render() {
       const { jobs, showDeleteJobModal, selectedJob, activePage, itemsPerPage, totalPages, isSelectAllJobsChecked } = this.state;
+
+      let noOfJobsSelected = jobs && jobs.list.filter(j => j.selected).length;
 
       let activeStartRecordCount = (activePage * itemsPerPage) - itemsPerPage + 1;//Math.ceil(activePage / itemsPerPage);
       let activeEndRecordCount = Math.min(activePage * itemsPerPage, jobs && jobs.meta && jobs.meta.count);
@@ -155,6 +161,15 @@ class Jobs extends Component {
               </div>
               <div className="clearfix"></div>
             </div>
+
+            <div className="mb-2">
+              {noOfJobsSelected > 0 ?
+              <p>
+                <span className="font-weight-bold">{ noOfJobsSelected }</span> Jobs selected.
+              </p>
+              : ""}
+            </div>
+
             <div className="table-responsive">
               <table className="table table-hover">
                 <thead>
@@ -201,6 +216,15 @@ class Jobs extends Component {
               <p>Total Count: <span className="font-weight-bold">{jobs && (jobs.meta.count === 0 ? '###' : jobs.meta.count)}</span></p>
             </div>
             <div className="float-md-right">
+                <select className="custom-select d-inline-block" name="recordsPerPage" value={"10"} onChange={e => this.handleRecordsPerPageChange(e)}>
+                  <option value="10">10 Records Per Page</option>
+                  <option value="20">20 Records Per Page</option>
+                  <option value="30">30 Records Per Page</option>
+                  <option value="40">40 Records Per Page</option>
+                  <option value="50">50 Records Per Page</option>
+                  <option value="100">100 Records Per Page</option>
+                </select>
+
               {/* <Pagination>
                 <Pagination.Prev disabled={activePage === 1} onClick={() => this.handlePaginationChange('prev')} />
                 
