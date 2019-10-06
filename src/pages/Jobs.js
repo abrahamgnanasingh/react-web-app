@@ -15,7 +15,16 @@ class Jobs extends Component {
       activePage: 1,
       itemsPerPage: 10,
       totalPages: 1,
-      isSelectAllJobsChecked: false
+      isSelectAllJobsChecked: false,
+      recordsPerPageOptions: [
+        { value: 10, label: "10 Records Per Page" },
+        { value: 20, label: "20 Records Per Page" },
+        { value: 30, label: "30 Records Per Page" },
+        { value: 40, label: "40 Records Per Page" },
+        { value: 50, label: "50 Records Per Page" },
+        { value: 100, label: "100 Records Per Page" }
+      ],
+      recordsPerPage: "20"
     }
 
     componentDidMount() {
@@ -69,7 +78,7 @@ class Jobs extends Component {
     }
 
     handleRecordsPerPageChange(e) {
-
+      this.setState({ recordsPerPage: e.target.value });
     }
 
     handlePaginationChange(elem) {
@@ -105,7 +114,7 @@ class Jobs extends Component {
     }
   
     render() {
-      const { jobs, showDeleteJobModal, selectedJob, activePage, itemsPerPage, totalPages, isSelectAllJobsChecked } = this.state;
+      const { jobs, showDeleteJobModal, selectedJob, activePage, itemsPerPage, totalPages, isSelectAllJobsChecked, recordsPerPageOptions, recordsPerPage } = this.state;
 
       let noOfJobsSelected = jobs && jobs.list.filter(j => j.selected).length;
 
@@ -216,13 +225,12 @@ class Jobs extends Component {
               <p>Total Count: <span className="font-weight-bold">{jobs && (jobs.meta.count === 0 ? '###' : jobs.meta.count)}</span></p>
             </div>
             <div className="float-md-right">
-                <select className="custom-select d-inline-block" name="recordsPerPage" value={"10"} onChange={e => this.handleRecordsPerPageChange(e)}>
-                  <option value="10">10 Records Per Page</option>
-                  <option value="20">20 Records Per Page</option>
-                  <option value="30">30 Records Per Page</option>
-                  <option value="40">40 Records Per Page</option>
-                  <option value="50">50 Records Per Page</option>
-                  <option value="100">100 Records Per Page</option>
+                <select className="custom-select d-inline-block" name="recordsPerPage" value={recordsPerPage} onChange={e => this.handleRecordsPerPageChange(e)}>
+                  {recordsPerPageOptions.map(rpp => {
+                    return (
+                      <option key={rpp.value} value={rpp.value}>{rpp.label}</option>
+                    )
+                  })}
                 </select>
 
               {/* <Pagination>
