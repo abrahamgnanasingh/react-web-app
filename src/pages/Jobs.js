@@ -70,11 +70,19 @@ class Jobs extends Component {
     }
 
     handleSelectAllJobs(e) {
-      var checked = e.target.checked;
+      var isPartialSelect = e.target.tagName !== 'INPUT';
+      var checked = false;
       var jobs = Object.assign({}, this.state.jobs);
-      jobs.list.forEach(j => {
-        j.selected = checked;
-      });
+      if(isPartialSelect) {
+        jobs.list.forEach(j => {
+          j.selected = false;
+        });
+      } else {
+        checked = e.target.checked;
+        jobs.list.forEach(j => {
+          j.selected = checked;
+        });
+      }
       this.setState({
         isSelectAllJobsChecked: checked,
         jobs
@@ -213,7 +221,7 @@ class Jobs extends Component {
                   <tr className="text-center">
                     <th>
                       <div>
-                        <Checkbox name="selectAllJobs" onChange={e => this.handleSelectAllJobs(e)} checked={isSelectAllJobsChecked} />
+                        <Checkbox isPartialSelect={!isSelectAllJobsChecked && noOfJobsSelected} name="selectAllJobs" onChange={e => this.handleSelectAllJobs(e)} checked={isSelectAllJobsChecked} />
                       </div>
                     </th>
                     <th>#</th>
