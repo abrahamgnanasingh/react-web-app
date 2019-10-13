@@ -62,6 +62,13 @@ class Jobs extends Component {
       });
     }
 
+    handleDeleteSelectedJobs() {
+      var jobs = Object.assign({}, this.state.jobs);
+      var selectedJobs = jobs.list.filter(j => j.selected);
+      var selectedJobIds = selectedJobs.map(j => j.id);
+      alert(selectedJobIds);
+    }
+
     handleSelectAllJobs(e) {
       var checked = e.target.checked;
       var jobs = Object.assign({}, this.state.jobs);
@@ -192,7 +199,7 @@ class Jobs extends Component {
                       <Dropdown.Toggle as={ThreeHorizontalDotsToggle} id="dropdown-custom-components"></Dropdown.Toggle>
 
                       <Dropdown.Menu className="rounded-0">
-                        <Dropdown.Item eventKey="1">Delete</Dropdown.Item>
+                        <Dropdown.Item eventKey="1" onClick={() => this.handleDeleteSelectedJobs()}>Delete</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </li>
