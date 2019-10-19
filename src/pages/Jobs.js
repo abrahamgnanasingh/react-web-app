@@ -70,19 +70,11 @@ class Jobs extends Component {
     }
 
     handleSelectAllJobs(e) {
-      var isPartialSelect = e.target.tagName !== 'INPUT';
-      var checked = false;
+      var checked = e.target.checked;
       var jobs = Object.assign({}, this.state.jobs);
-      if(isPartialSelect) {
-        jobs.list.forEach(j => {
-          j.selected = false;
-        });
-      } else {
-        checked = e.target.checked;
-        jobs.list.forEach(j => {
-          j.selected = checked;
-        });
-      }
+      jobs.list.forEach(j => {
+        j.selected = checked;
+      });
       this.setState({
         isSelectAllJobsChecked: checked,
         jobs
