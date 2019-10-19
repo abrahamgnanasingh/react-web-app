@@ -268,22 +268,22 @@ class Jobs extends Component {
 
                   <li className="list-inline-item">
                     <ul className="list-inline mb-0">
-                      <li className="list-inline-item h4 mb-0">
+                      <li className="list-inline-item mb-0">
                         <button className="btn py-0" disabled={activePage === 1} onClick={() => this.handlePaginationChange('prev')}>
-                          <i className="fa fa-angle-left fs-24" aria-hidden={activePage === 1 ? "true" : "false"}></i>
+                          <i className="fa fa-chevron-left fs-18" aria-hidden={activePage === 1 ? "true" : "false"}></i>
                           {/* <span aria-hidden={activePage === 1 ? "true" : "false"}>&lt;</span> */}
                         </button>
                       </li>
                       <li className="list-inline-item h6 mb-0">
-                        <p>
+                        <p className="mb-0">
                           <span>{activeStartRecordCount}</span>
                           <span className="px-2 text-muted">to</span>
                           <span>{activeEndRecordCount}</span>
                         </p>
                       </li>
-                      <li className="list-inline-item h4 mb-0">
+                      <li className="list-inline-item mb-0">
                         <button className="btn py-0" disabled={activePage === totalPages} onClick={() => this.handlePaginationChange('next')}>
-                          <i className="fa fa-angle-right fs-24" aria-hidden={activePage === totalPages ? "true" : "false"}></i>
+                          <i className="fa fa-chevron-right fs-18" aria-hidden={activePage === totalPages ? "true" : "false"}></i>
                           {/* <span aria-hidden={activePage === totalPages ? "true" : "false"}>&gt;</span> */}
                         </button>
                       </li>
